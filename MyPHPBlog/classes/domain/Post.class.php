@@ -24,7 +24,7 @@ class Post
 
     public function setId($id)
     {
-        $thi->id = $id;
+        $this->id = $id;
     }
 
     public function getTitle()
