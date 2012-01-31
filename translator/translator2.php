@@ -37,5 +37,3 @@ function translate($word) {
     }
     return $newWord;
 }
-
-echo translate("apricot");
