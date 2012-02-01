@@ -7,9 +7,9 @@ if(!isset($_SESSION['user'])){
 }
 // Ajout 
 if(isset($_POST) && !empty($_POST)) {
-    $postManager = new SimplePostManager();
+    $postManager = new PdoPostManager();
     $postManager->addPost($_POST["title"], $_POST['body'], unserialize($_SESSION['user']));
-    redirect('index.php');
+    //redirect('index.php');
 }
 ?>
 <html>

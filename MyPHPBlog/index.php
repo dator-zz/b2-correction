@@ -1,7 +1,7 @@
 <?php 
 include('boot.php');
 
-$post = new SimplePostManager();
+$post = new PdoPostManager();
 $posts = $post->findAllPosts();
 ?>
 <html>
@@ -14,7 +14,6 @@ $posts = $post->findAllPosts();
     <h1>Mon super blog</h1>
     <ul>
     <?php foreach($posts as $post): ?>
-    <?php $post = unserialize($post); ?>
         <li>
             <span><?php echo $post->getTitle()?>, par <?php echo $post->getUser()->getFirstName();?></span>
             <p><?php echo $post->getBody();?></p>

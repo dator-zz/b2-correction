@@ -2,7 +2,7 @@
 include('boot.php');
 $errorMessage = null; 
 if(isset($_POST['email']) && isset($_POST['password'])) {
-    $userManager = new SimpleUserManager();
+    $userManager = new PdoUserManager();
     $user = $userManager->authenticate($_POST['email'], $_POST['password']);
     
     if($user) {
