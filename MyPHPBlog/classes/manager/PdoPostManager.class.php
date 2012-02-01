@@ -1,30 +1,35 @@
 <?php
 
-class PdoPostManager implements PostManager
+class PdoPostManager extends AbstractPdoManager implements PostManager
 {
-    protected $pdo;
-
-    public function __construct()
-    {
-        $this->pdo = new PDO('mysql:host=localhost;dbname=myphpblog', 'root', 'root');        
-    }
-
     public function addPost($title, $body, User $user)
     {
-        $query = 'INSERT INTO post (title, body, user_id) VALUES ("%s", "%s", "%s")';
+        $query = 'INSERT INTO post (title, body, user_id) VALUES (:title, :body, :userid)';
 
-        $this->pdo->exec(sprintf($query, $title, $body, $user->getId()));
+        $stm = $this->pdo->prepare($query);
+        
+        $stm->execute(array(
+            ':title' => $title,
+            ':body' => $body,
+            ':userid'=>$user->getId()
+        ));
     }
 
     public function findAllPosts()
     {
-        $stm = $this->pdo->query('SELECT * FROM post');
-        $posts = array();
+        $stm = $this->pdo->prepare('SELECT * FROM post');
+        $stm->execute();
         $results = $stm->fetchAll(PDO::FETCH_ASSOC);
+        $posts = array();
 
         foreach($results as $p) {
-            $stm = $this->pdo->query(sprintf('SELECT * FROM user WHERE id=%s', $p['user_id']));
+            $query = 'SELECT * FROM user WHERE id=:id';
+            $stm = $this->pdo->prepare($query);
             
+            $stm->execute(array(
+                ':id' => $p['user_id']
+            ));
+
             $r = $stm->fetch(PDO::FETCH_ASSOC);
             $user = new User($r['id'], $r['firstName'], $r['lastName'], $r['email'], $r['password']);
             $post = new Post($p['id'], $p['title'], $p['body'], $p['publicationDate'], $user);

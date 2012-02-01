@@ -1,21 +1,18 @@
 <?php
 
-class PdoUserManager implements UserManager
+class PdoUserManager extends AbstractPdoManager  implements UserManager
 {
-    protected $pdo;
-
-    public function __construct()
-    {
-        $this->pdo = new PDO('mysql:host=localhost;dbname=myphpblog', 'root', 'root');        
-    }
-
     public function authenticate($email, $password)
     {
-        $query = 'SELECT * FROM user WHERE email="%s" AND password="%s"';
-        $stm = $this->pdo->query(sprintf($query, $email, $password));
+        $query = 'SELECT * FROM user WHERE email = :email AND password = :password';
+        $stm = $this->pdo->prepare($query);
         
-        $r = $stm->fetch(PDO::FETCH_ASSOC);
+        $stm->execute(array(
+            ':email' => $email,
+            ':password' => $password
+        ));
 
+        $r = $stm->fetch(PDO::FETCH_ASSOC);
         if($r) {
             return new User($r['id'], $r['firstName'], $r['lastName'], $r['email'], $r['password']);
         }

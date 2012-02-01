@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+include('classes/manager/AbstractPdoManager.class.php');
+
 include('classes/manager/UserManager.class.php');
 include('classes/manager/PostManager.class.php');
 
