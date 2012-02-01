@@ -29,22 +29,22 @@ class User
 
     public function getFirstname()
     {
-        return $this->firstname;
+        return $this->firstName;
     }
     
     public function setFirstname($firstname)
     {
-        $this->firstname = $firstname;
+        $this->firstName = $firstname;
     }
 
     public function getLastname()
     {
-        return $this->lastname;
+        return $this->lastName;
     }
     
     public function setLastname($lastname)
     {
-        $this->lastname = $lastname;
+        $this->lastName = $lastname;
     }
 
     public function getEmail()
