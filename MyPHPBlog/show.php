@@ -7,6 +7,7 @@ $post = $postManager->findPostById($_GET['id']);
 <html>
 <head>
     <title>Show post</title>
+    <script type="text/javascript" src="public/js/jquery.js"></script>
     <script type="text/javascript" src="public/js/functions.js"></script>
 </head>
 <body>
