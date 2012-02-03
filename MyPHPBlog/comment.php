@@ -8,4 +8,5 @@ if(!isset($_GET['id'])) {
 $commentManager = new PdoCommentManager();
 $commentManager->addComment($_POST['body'], $_GET['id'], unserialize($_SESSION['user']));
 
-redirect('show.php?id='.$_GET['id']);
+echo "<li>".$_POST['body']."</li>";
+exit;
